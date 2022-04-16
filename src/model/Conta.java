@@ -1,6 +1,6 @@
-package Model;
+package model;
 
-import Interfaces.ContaI;
+import interfaces.ContaI;
 
 /**
  *

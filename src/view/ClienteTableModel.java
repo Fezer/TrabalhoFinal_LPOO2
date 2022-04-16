@@ -1,7 +1,7 @@
-package View;
+package view;
 
-import Controller.Usability;
-import Model.Cliente;
+import controller.Usability;
+import model.Cliente;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
@@ -40,7 +40,7 @@ public class ClienteTableModel extends AbstractTableModel {
         switch (columnIndex) {
             case 0: return customer.getNome();//if column 1 (name)
             case 1: return customer.getSobrenome();//if column 2 (birthday)
-            case 2: return customer.getEndereço();
+            case 2: return customer.getEndereco();
             case 3: return customer.getCpf();
             case 4: return customer.getRg();
             case 5: return (customer.isPossuiConta() ?  "Sim":"Não");

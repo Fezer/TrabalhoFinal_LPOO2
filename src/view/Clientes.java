@@ -1,10 +1,10 @@
-package View;
+package view;
 
-import Controller.Usability;
-import Model.Cliente;
-import Model.Conta;
-import Model.ContaCorrente;
-import Model.ContaInvestimento;
+import controller.Usability;
+import model.Cliente;
+import model.Conta;
+import model.ContaCorrente;
+import model.ContaInvestimento;
 import java.text.ParseException;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -700,7 +700,7 @@ public class Clientes extends javax.swing.JFrame {
         sobrenomeText.setText(c.getSobrenome());
         rgText.setText(c.getRg());
         cpfText.setText(c.getCpf());
-        endereçoText.setText(c.getEndereço());
+        endereçoText.setText(c.getEndereco());
     }
     
     private void maskCampo(JTextField field, int max){

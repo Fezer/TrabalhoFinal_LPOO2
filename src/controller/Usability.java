@@ -1,7 +1,7 @@
-package Controller;
+package controller;
 
-import Model.Cliente;
-import Model.Conta;
+import model.Cliente;
+import model.Conta;
 import java.util.ArrayList;
 import java.util.List;
 

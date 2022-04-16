@@ -1,6 +1,6 @@
-package Interfaces;
+package interfaces;
 
-import Model.Cliente;
+import model.Cliente;
 
 /**
  * 

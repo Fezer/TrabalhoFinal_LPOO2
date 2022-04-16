@@ -1,10 +1,10 @@
-package View;
+package view;
 
-import Controller.Usability;
-import Model.Cliente;
-import Model.Conta;
-import Model.ContaCorrente;
-import Model.ContaInvestimento;
+import controller.Usability;
+import model.Cliente;
+import model.Conta;
+import model.ContaCorrente;
+import model.ContaInvestimento;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;

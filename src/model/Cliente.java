@@ -1,4 +1,4 @@
-package Model;
+package model;
 /**
  *
  * @authors nickolas & albano
@@ -8,15 +8,17 @@ public class Cliente implements Comparable{
     private String sobrenome;
     private String rg;
     private String cpf;
-    private String endereço;
+    private String endereco;
     private boolean possuiConta = false;
+    
+    public Cliente (){}
 
-    public Cliente(String nome, String sobrenome, String rg, String cpf, String endereço) {
+    public Cliente(String nome, String sobrenome, String rg, String cpf, String endereco) {
         this.nome = nome;
         this.sobrenome = sobrenome;
         this.rg = rg;
         this.cpf = cpf;
-        this.endereço = endereço;
+        this.endereco = endereco;
     }
 
     public String getNome() {
@@ -51,12 +53,12 @@ public class Cliente implements Comparable{
         this.cpf = cpf;
     }
 
-    public String getEndereço() {
-        return endereço;
+    public String getEndereco() {
+        return endereco;
     }
 
-    public void setEndereço(String endereço) {
-        this.endereço = endereço;
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
     }
 
     public boolean isPossuiConta() {
