@@ -18,7 +18,7 @@ CREATE TABLE ContaInvestimento (
     numero INTEGER PRIMARY KEY,
     depositoMinimo DOUBLE,
     montanteMinimo DOUBLE,
-    saldo FLOAT,
+    saldo DOUBLE,
     cpfCliente VARCHAR(11)
 );
 
