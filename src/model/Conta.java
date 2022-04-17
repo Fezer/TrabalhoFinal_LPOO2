@@ -45,6 +45,10 @@ public abstract class Conta implements ContaI{
     public Cliente getDono() {     
         return this.dono;     
     }
+    
+    public void setNumero(int numero) {
+        this.numero = numero;
+    }
 
     @Override
     public int getNumero() {
@@ -59,4 +63,5 @@ public abstract class Conta implements ContaI{
     public double getSaldo() {
         return this.saldo;
     }
+
 }

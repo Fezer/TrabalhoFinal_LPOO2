@@ -46,11 +46,11 @@ public class ClienteDAO implements DAO<Cliente> {
             + "WHERE cpf=?";
     private static final String QUERY_ATUALIZAR_CPF = 
             "UPDATE cliente SET "
-            + "cpf, "
-            + "nome, "
-            + "sobrenome, "
-            + "rg, "
-            + "endereco, "
+            + "cpf=?, "
+            + "nome=?, "
+            + "sobrenome=?, "
+            + "rg=?, "
+            + "endereco=?, "
             + "WHERE cpf=?";
     private static final String QUERY_REMOVER = 
             "DELETE FROM cliente "
@@ -120,7 +120,7 @@ public class ClienteDAO implements DAO<Cliente> {
             st.setString(5, c.getEndereco());
             st.execute();
         } catch(SQLException e){
-            throw new DAOException("Erro ao atualizar cliente de cpf "+c.getCpf()+": " + QUERY_INSERIR, e);
+            throw new DAOException("Erro ao inserir cliente de cpf "+c.getCpf()+": " + QUERY_INSERIR, e);
         }
     }
 
@@ -133,6 +133,7 @@ public class ClienteDAO implements DAO<Cliente> {
             st.setString(3, c.getSobrenome());
             st.setString(4, c.getRg());
             st.setString(5, c.getEndereco());
+            st.setString(6, c.getCpf());
             st.executeUpdate();
         } catch(SQLException e){
             throw new DAOException("Erro ao atualizar cliente de cpf "+c.getCpf()+": " + QUERY_ATUALIZAR_CPF, e);
