@@ -18,52 +18,43 @@ import java.util.List;
  * @author Felipe
  */
 public class ClienteDAO implements DAO<Cliente> {
+
+	private static final String table = "Cliente";
     
     private static final String QUERY_INSERIR = 
-            "INSERT INTO cliente ("
+            "INSERT INTO "+ table +" ("
             + "cpf, "
             + "nome, "
             + "sobrenome, "
             + "rg, "
-            + "endereco, "
+            + "endereco) "
             + "VALUES(?, ?, ?, ?, ?)";
-    private static final String QUERY_BUSCAR_TODOS =
-            "SELECT "
-            + "cpf, "
-            + "nome, "
-            + "sobrenome, "
-            + "rg, "
-            + "endereco, "
-            + "FROM cliente";
-    private static final String QUERY_BUSCA_CPF =
-            "SELECT "
-            + "cpf, "
-            + "nome, "
-            + "sobrenome, "
-            + "rg, "
-            + "endereco, "
-            + "FROM cliente "
-            + "WHERE cpf=?";
+
+    private static final String QUERY_BUSCAR_TODOS = "SELECT * FROM "+ table;
+
+    private static final String QUERY_BUSCA_CPF = "SELECT * FROM "+ table +" WHERE cpf=?";
+
     private static final String QUERY_ATUALIZAR_CPF = 
-            "UPDATE cliente SET "
+            "UPDATE "+ table +" SET "
             + "cpf=?, "
             + "nome=?, "
             + "sobrenome=?, "
             + "rg=?, "
-            + "endereco=?, "
+            + "endereco=? "
             + "WHERE cpf=?";
-    private static final String QUERY_REMOVER = 
-            "DELETE FROM cliente "
-            + "WHERE cpf=?";
+
+    private static final String QUERY_REMOVER = "DELETE FROM "+ table +" WHERE cpf=?";
             
-    private Connection con = null;
+	private ConnectionFactory conFactory = new ConnectionFactory();
+    private Connection con;
     
     
-    public ClienteDAO(Connection con) throws DAOException{
-        if(con == null){
-            throw new DAOException("Conexão nula ao criar PessoaDAO.");
-        }
-        this.con = con;
+    public ClienteDAO(){
+		try {
+			this.con = this.conFactory.getConnection();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
     }
 
 

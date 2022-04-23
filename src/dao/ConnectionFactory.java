@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
+import exceptions.DAOException;
 
 /**
  *
@@ -30,17 +31,16 @@ public class ConnectionFactory implements AutoCloseable {
             try{
                 Properties prop = new Properties();
                 prop.load(getClass().getResourceAsStream("/properties/bandoDeDados.properties"));
-                
                 DRIVER = prop.getProperty("db.driver"); 
                 URL = prop.getProperty("db.url");
                 LOGIN = prop.getProperty("db.user");
-                SENHA = prop.getProperty("db.password");
+                SENHA = prop.getProperty("db.pwd");
                 
-                Class.forName(DRIVER);
+//                Class.forName(DRIVER);
                 con = DriverManager.getConnection(URL, LOGIN, SENHA);
-            } catch(ClassNotFoundException e){
-                e.printStackTrace();
-                throw new DAOException("Driver do banco não encontrato: " + DRIVER, e);
+//            } catch(ClassNotFoundException e){
+//                e.printStackTrace();
+//                throw new DAOException("Driver do banco não encontrato: " + DRIVER, e);
             } catch(SQLException e){
                 e.printStackTrace();
                 throw new DAOException("Erro conectando ao DB: " + URL + "/" + LOGIN + "/" + SENHA, e);

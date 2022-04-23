@@ -5,11 +5,22 @@ import model.Cliente;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
+import dao.ClienteDAO;
+import exceptions.DAOException;
 
 public class ClienteTableModel extends AbstractTableModel {
     private final String[] colunas=new String[]{"Nome", "Sobrenome","Endereço" ,"CPF","RG", "Possui Conta"};
 
     private List<Cliente> lista = Usability.clientes;
+	private ClienteDAO clienteDao = new ClienteDAO();
+
+	public ClienteTableModel(){
+		try {
+			List<Cliente> clientes = clienteDao.buscarTodos();
+			this.atualizarTabela(clientes);
+		} catch (Exception e) {
+		}
+	}
 
     @Override
     public int getRowCount() {
@@ -48,22 +59,35 @@ public class ClienteTableModel extends AbstractTableModel {
         }
     }
 
-    public void adicionaCliente(Cliente customer) {
-        this.lista.add(customer);
-        this.fireTableRowsInserted(lista.size()-1,lista.size()-1);//update JTable
-        System.out.println(this.lista.size());
+    public void adicionaCliente(Cliente customer){
+		try {
+			this.clienteDao.inserir(customer);
+			this.lista.add(customer);
+			this.fireTableRowsInserted(lista.size()-1,lista.size()-1);//update JTable
+			System.out.println(this.lista.size());
+		} catch (Exception e) {
+		}
     }
     
-    public boolean removeCliente(Cliente customer) {
-        int linha = this.lista.indexOf(customer);
-        boolean result = this.lista.remove(customer);
-        this.fireTableRowsDeleted(linha,linha);//update JTable
-        return result;
+    public boolean removeCliente(Cliente customer){
+		try {
+			this.clienteDao.remover(customer);
+			int linha = this.lista.indexOf(customer);
+			boolean result = this.lista.remove(customer);
+			this.fireTableRowsDeleted(linha,linha);//update JTable
+			return result;
+		} catch (Exception e) {
+			return false;
+		}
     }
     
-    public void atualizaCliente(int linha, Cliente c) {
-        this.lista.set(linha, c);
-        this.fireTableDataChanged();
+    public void atualizaCliente(int linha, Cliente c){
+		try {
+			this.clienteDao.atualizar(c);
+			this.lista.set(linha, c);
+			this.fireTableDataChanged();
+		} catch (Exception e) {
+		}
     }
 
     public void atualizarTabela(List<Cliente> lista){

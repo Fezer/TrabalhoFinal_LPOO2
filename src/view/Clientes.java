@@ -529,7 +529,9 @@ public class Clientes extends javax.swing.JFrame {
             if(response == JOptionPane.YES_OPTION){
                 tableCliente.removeCliente(clienteSelecionado);
                 
-                tableConta.removeConta(clienteSelecionado);
+				if(clienteSelecionado.isPossuiConta()) {
+					tableConta.removeConta(clienteSelecionado);
+				}
                 limpaFormulario();
                 linhaClicada = -1;
             }            
