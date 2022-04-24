@@ -12,12 +12,18 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import model.ContaInvestimento;
+import model.ContaCorrente;
+
 
 /**
  *
  * @author Felipe
  */
 public class ClienteDAO implements DAO<Cliente> {
+
+	private static ContaCorrenteDAO correnteDao = new ContaCorrenteDAO();
+	private static ContaInvestimentoDAO investimentoDao = new ContaInvestimentoDAO();
 
 	private static final String table = "Cliente";
     
@@ -33,6 +39,10 @@ public class ClienteDAO implements DAO<Cliente> {
     private static final String QUERY_BUSCAR_TODOS = "SELECT * FROM "+ table;
 
     private static final String QUERY_BUSCA_CPF = "SELECT * FROM "+ table +" WHERE cpf=?";
+
+	private static final String QUERY_BUSCAR_CORRENTE = "SELECT * FROM ContaCorrente WHERE cpfCliente=?";
+
+	private static final String QUERY_BUSCAR_INVESTIMENTO = "SELECT * FROM ContaInvestimento WHERE cpfCliente=?";
 
     private static final String QUERY_ATUALIZAR_CPF = 
             "UPDATE "+ table +" SET "
@@ -72,6 +82,13 @@ public class ClienteDAO implements DAO<Cliente> {
                 c.setSobrenome(rs.getString("sobrenome"));
                 c.setRg(rs.getString("rg"));
                 c.setEndereco(rs.getString("endereco"));
+
+				if(this.buscarInvestimento(rs.getString("cpf")) || this.buscarCorrente(rs.getString("cpf"))) {
+					c.setPossuiConta(true);
+				} else {
+					c.setPossuiConta(false);
+				}
+
             }
             return c;
         }catch(SQLException e){
@@ -92,12 +109,51 @@ public class ClienteDAO implements DAO<Cliente> {
                 c.setSobrenome(rs.getString("sobrenome"));
                 c.setRg(rs.getString("rg"));
                 c.setEndereco(rs.getString("endereco"));
+
+				if(this.buscarInvestimento(rs.getString("cpf")) || this.buscarCorrente(rs.getString("cpf"))) {
+					c.setPossuiConta(true);
+				} else {
+					c.setPossuiConta(false);
+				}
+
                 lista.add(c);
             }
             return lista;
         }catch(SQLException e){
             throw new DAOException("Erro buscando todos os clientes: " + QUERY_BUSCAR_TODOS, e);
         }
+    }
+
+	public boolean buscarCorrente(String cpf) throws DAOException {
+        try{
+            PreparedStatement st = con.prepareStatement(QUERY_BUSCAR_CORRENTE);
+            st.setString(1, cpf);
+            ResultSet rs = st.executeQuery();
+			
+			if(rs.next()) {
+				return true;
+			}
+        } catch(SQLException e){
+            throw new DAOException("Erro ao buscar Conta Corrente do cpf "+ cpf +": " + QUERY_INSERIR, e);
+        }
+
+		return false;
+    }
+
+	public boolean buscarInvestimento(String cpf) throws DAOException {
+        try{
+            PreparedStatement st = con.prepareStatement(QUERY_BUSCAR_INVESTIMENTO);
+            st.setString(1, cpf);
+            ResultSet rs = st.executeQuery();
+			
+			if(rs.next()) {
+				return true;
+			}
+        } catch(SQLException e){
+            throw new DAOException("Erro ao buscar Conta Investimento do cpf "+ cpf +": " + QUERY_INSERIR, e);
+        }
+
+		return false;
     }
 
     @Override

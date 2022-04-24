@@ -570,7 +570,7 @@ public class Clientes extends javax.swing.JFrame {
                          return;
                     }                    
                     c.getDono().setPossuiConta(true);
-                    tableConta.adicionaConta(c);
+                    tableConta.adicionaContaCorrente(c);
                     break;
                 case 2:
                     c = new ContaInvestimento(Double.parseDouble(depMinLimText.getText()),Double.parseDouble(montMinText.getText()), numeroConta, clienteSelecionado);
@@ -579,7 +579,7 @@ public class Clientes extends javax.swing.JFrame {
                          return;
                     } 
                     c.getDono().setPossuiConta(true);
-                    tableConta.adicionaConta(c);
+                    tableConta.adicionaContaInvestimento(c);
                     break;
                 default: 
                     contaProps.setVisible(false);

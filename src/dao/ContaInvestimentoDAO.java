@@ -11,6 +11,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import model.Cliente;
+import model.Conta;
 import model.ContaInvestimento;
 
 /**
@@ -18,51 +20,48 @@ import model.ContaInvestimento;
  * @author Felipe
  */
 public class ContaInvestimentoDAO {
+
+	private static ClienteDAO clienteDao = new ClienteDAO();
+
+	private static final String table = "ContaInvestimento";
     
     private static final String QUERY_INSERIR = 
-            "INSERT INTO ContaInvestimento ("
+            "INSERT INTO "+ table +" ("
             + "numero, "
             + "depositoMinimo, "
             + "montanteMinimo, "
             + "saldo, "
-            + "cpfCliente, "
+            + "cpfCliente) "
             + "VALUES(?, ?, ?, ?, ?)";
-    private static final String QUERY_BUSCAR_TODOS =
-            "SELECT "
-            + "numero, "
-            + "depositoMinimo, "
-            + "montanteMinimo, "
-            + "saldo, "
-            + "cpfCliente, "
-            + "FROM ContaInvestimento";
-    private static final String QUERY_BUSCA_NUMERO =
-            "SELECT "
-            + "numero, "
-            + "depositoMinimo, "
-            + "montanteMinimo, "
-            + "saldo, "
-            + "cpfCliente, "
-            + "FROM ContaInvestimento"
-            + "WHERE numero=?";
+    private static final String QUERY_BUSCAR_TODOS = "SELECT * FROM "+ table;
+
+    private static final String QUERY_BUSCA_NUMERO = "SELECT * FROM "+ table +" WHERE numero=?";
+
     private static final String QUERY_ATUALIZAR_NUMERO = 
-            "UPDATE ContaInvestimento SET "
+            "UPDATE "+ table +" SET "
             + "numero=?, "
             + "depositoMinimo=?, "
             + "montanteMinimo=?, "
             + "saldo=?, "
-            + "cpfCliente=?, "
+            + "cpfCliente=? "
             + "WHERE numero=?";
-    private static final String QUERY_REMOVER = 
-            "DELETE FROM ContaInvestimento "
+
+    private static final String QUERY_ATUALIZAR_SALDO = 
+            "UPDATE "+ table +" SET "
+            + "saldo=? "
             + "WHERE numero=?";
+
+    private static final String QUERY_REMOVER = "DELETE FROM "+ table + " WHERE numero=?";
     
     private Connection con = null;
+	private ConnectionFactory conFactory = new ConnectionFactory();
     
-    public ContaInvestimentoDAO(Connection con) throws DAOException{
-        if(con == null){
-            throw new DAOException("Conexão nula ao criar ContaCorrenteDAO.");
-        }
-        this.con = con;
+    public ContaInvestimentoDAO(){
+        try {
+			this.con = this.conFactory.getConnection();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
     }
 
     //    TO-DO: Entender como correlacionar cliente com conta. Model conta correlaciona-se com cliente através do objeto e BD a correlação é pelo cpf.
@@ -78,6 +77,11 @@ public class ContaInvestimentoDAO {
                 c.setDepositoMin(rs.getDouble("depositoMinimo"));
                 c.setMontanteMin(rs.getDouble("montanteMinimo"));
                 c.setSaldo(rs.getDouble("saldo"));
+
+				String cpf = rs.getString("cpfCliente");
+				ClienteDAO clienteDao = new ClienteDAO();
+				Cliente cliente = clienteDao.buscar(cpf);
+				c.setDono(cliente);
             }
             return c;
         }catch(SQLException e){
@@ -97,6 +101,12 @@ public class ContaInvestimentoDAO {
                 c.setDepositoMin(rs.getDouble("depositoMinimo"));
                 c.setMontanteMin(rs.getDouble("montanteMinimo"));
                 c.setSaldo(rs.getDouble("saldo"));
+
+				String cpf = rs.getString("cpfCliente");
+				ClienteDAO clienteDao = new ClienteDAO();
+				Cliente cliente = clienteDao.buscar(cpf);
+				c.setDono(cliente);
+
                 lista.add(c);
             }
             return lista;
@@ -131,6 +141,17 @@ public class ContaInvestimentoDAO {
             st.executeUpdate();
         } catch(SQLException e){
             throw new DAOException("Erro ao atualizar conta de numero "+conta.getNumero()+": " + QUERY_ATUALIZAR_NUMERO, e);
+        }
+    }
+
+	public void atualizarSaldo(Conta conta) throws DAOException {
+        try{
+            PreparedStatement st = con.prepareStatement(QUERY_ATUALIZAR_SALDO);
+            st.setDouble(1, conta.getSaldo());
+            st.setInt(2, conta.getNumero());
+            st.executeUpdate();
+        } catch(SQLException e){
+            throw new DAOException("Erro ao atualizar o saldo da conta de numero "+conta.getNumero()+": " + QUERY_ATUALIZAR_SALDO, e);
         }
     }
 

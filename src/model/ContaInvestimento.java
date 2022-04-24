@@ -1,5 +1,6 @@
 package model;
 
+import dao.ContaInvestimentoDAO;
 /**
  *
  * @authors nickolas & albano
@@ -35,22 +36,50 @@ public class ContaInvestimento extends Conta{
     
     @Override
     public boolean saca(double valor) {
-       if((getSaldo()-valor) >= this.montanteMin)
-           return(super.saca(valor));
-       return false;
-    }    
+		if((getSaldo()-valor) >= this.montanteMin){
+			double oldSaldo = this.getSaldo();
+			if (super.saca(valor)) {
+				try {
+					new ContaInvestimentoDAO().atualizarSaldo(this);
+					return true;
+				} catch (Exception e) {
+					super.setSaldo(oldSaldo);
+				}
+			}
+		}
+		return false;
+    }
     
     @Override
     public boolean deposita(double valor) {
-        if(valor >= this.depositoMin)
-            return (super.deposita(valor));
+        if(valor >= this.depositoMin) {
+			double oldSaldo = this.getSaldo();
+            if (super.deposita(valor)) {
+				try {
+					new ContaInvestimentoDAO().atualizarSaldo(this);
+					return true;
+				} catch (Exception e) {
+					super.setSaldo(oldSaldo);
+				}
+			}
+		}
         return false;
     }
     
     @Override
     public void remunera() {       
-       super.setSaldo(getSaldo()+(getSaldo()*0.02));
+       this.setSaldo(getSaldo()+(getSaldo()*0.02));
     }
-    
-    
+
+	@Override
+	public void setSaldo(double saldo) {
+		double oldSaldo = this.getSaldo();
+        super.setSaldo(saldo);
+
+		try {
+			new ContaInvestimentoDAO().atualizarSaldo(this);
+		} catch (Exception e) {
+			super.setSaldo(oldSaldo);
+		}
+    }
 }

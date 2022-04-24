@@ -9,12 +9,28 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 import javax.swing.table.AbstractTableModel;
+import dao.*;
 
 public class ContasTableModel extends AbstractTableModel {
     private final String[] colunas=new String[]{"Número","Tipo conta", "Nome", "CPF","Depósito minimo", "Montante minimo"};
 
     private List<Conta> lista = Usability.contas;
+	private ClienteDAO clienteDao = new ClienteDAO();
+	private ContaCorrenteDAO correnteDao = new ContaCorrenteDAO();
+	private ContaInvestimentoDAO investimentoDao = new ContaInvestimentoDAO();
 
+	public ContasTableModel() {
+		try {
+			List<ContaCorrente> correntes = correnteDao.buscarTodos();
+			List<ContaInvestimento> investimentos = investimentoDao.buscarTodos();
+			List<Conta> contas = new ArrayList<Conta>();
+			contas.addAll(correntes);
+			contas.addAll(investimentos);
+			this.atualizarTabela(contas);
+		} catch (Exception e) {
+		}
+	}
+	
     @Override
     public int getRowCount() {
         return lista.size();
@@ -41,10 +57,21 @@ public class ContasTableModel extends AbstractTableModel {
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         Conta customer = lista.get(rowIndex);
+		
         ContaInvestimento customerI= null;
         if(customer instanceof ContaInvestimento){
-             customerI = (ContaInvestimento)customer;
-        }
+            customerI = (ContaInvestimento)customer;
+			try {
+				customer = investimentoDao.buscar(customer.getNumero());
+			} catch(Exception e) {
+			}
+			
+        } else {
+			try {
+				customer = correnteDao.buscar(customer.getNumero());
+			} catch(Exception e) {
+			}
+		}
             
         switch (columnIndex) {
             case 0: return customer.getNumero();//if column 1 (name)
@@ -57,10 +84,24 @@ public class ContasTableModel extends AbstractTableModel {
         }
     }
 
-    public void adicionaConta(Conta customer) {
-        this.lista.add(customer);
-        this.fireTableRowsInserted(lista.size()-1,lista.size()-1);//update JTable
-        System.out.println(this.lista.size());
+    public void adicionaContaCorrente(Conta customer) {
+		try {
+			this.correnteDao.inserir((ContaCorrente) customer);
+			this.lista.add(customer);
+			this.fireTableRowsInserted(lista.size()-1,lista.size()-1);//update JTable
+			System.out.println(this.lista.size());
+		} catch (Exception e) {
+		}
+    }
+
+	public void adicionaContaInvestimento(Conta customer) {
+        try {
+			this.investimentoDao.inserir((ContaInvestimento) customer);
+			this.lista.add(customer);
+			this.fireTableRowsInserted(lista.size()-1,lista.size()-1);//update JTable
+			System.out.println(this.lista.size());
+		} catch (Exception e) {
+		}
     }
     
     public boolean removeConta(Cliente customer) {       
@@ -73,9 +114,23 @@ public class ContasTableModel extends AbstractTableModel {
         return result;
     }
     
-    public void atualizaConta(int linha, Conta c) {
-        this.lista.set(linha, c);
-        this.fireTableDataChanged();
+    public void atualizaContaCorrente(int linha, Conta c) {
+		try {
+			this.correnteDao.atualizar((ContaCorrente) c);
+			this.lista.set(linha, c);
+			this.fireTableDataChanged();
+		} catch (Exception e) {
+		}
+
+    }
+
+	public void atualizaContaInvestimento(int linha, Conta c) {
+		try {
+			this.investimentoDao.atualizar((ContaInvestimento) c);
+			this.lista.set(linha, c);
+			this.fireTableDataChanged();
+		} catch (Exception e) {
+		}
     }
 
     public void atualizarTabela(List<Conta> lista){
