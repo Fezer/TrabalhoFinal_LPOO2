@@ -1,6 +1,7 @@
 package model;
 
 import interfaces.ContaI;
+import dao.*;
 
 /**
  *
@@ -24,8 +25,8 @@ public abstract class Conta implements ContaI{
     public boolean deposita(double valor) {
         if(valor  < 0.01)
             return false;
-        
-        this.saldo += valor;
+
+        this.setSaldo(this.getSaldo() + valor);
         return true;
     }
 
@@ -33,7 +34,7 @@ public abstract class Conta implements ContaI{
     public boolean saca(double valor) {
         if(valor  < 0.01)
             return false;
-        this.saldo -= valor;
+        this.setSaldo(this.getSaldo() - valor);
         return true;
     }
 

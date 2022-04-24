@@ -114,9 +114,23 @@ public class ContasTableModel extends AbstractTableModel {
         return result;
     }
     
-    public void atualizaConta(int linha, Conta c) {
-        this.lista.set(linha, c);
-        this.fireTableDataChanged();
+    public void atualizaContaCorrente(int linha, Conta c) {
+		try {
+			this.correnteDao.atualizar((ContaCorrente) c);
+			this.lista.set(linha, c);
+			this.fireTableDataChanged();
+		} catch (Exception e) {
+		}
+
+    }
+
+	public void atualizaContaInvestimento(int linha, Conta c) {
+		try {
+			this.investimentoDao.atualizar((ContaInvestimento) c);
+			this.lista.set(linha, c);
+			this.fireTableDataChanged();
+		} catch (Exception e) {
+		}
     }
 
     public void atualizarTabela(List<Conta> lista){

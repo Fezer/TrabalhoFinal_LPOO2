@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import model.ContaCorrente;
 import model.Cliente;
+import model.Conta;
 
 /**
  *
@@ -40,6 +41,11 @@ public class ContaCorrenteDAO {
             + "limite=?, "
             + "saldo=?, "
             + "cpfCliente=? "
+            + "WHERE numero=?";
+
+    private static final String QUERY_ATUALIZAR_SALDO = 
+            "UPDATE "+ table +" SET "
+            + "saldo=? "
             + "WHERE numero=?";
 
     private static final String QUERY_REMOVER = "DELETE FROM "+ table + " WHERE numero=?";
@@ -128,6 +134,17 @@ public class ContaCorrenteDAO {
             st.executeUpdate();
         } catch(SQLException e){
             throw new DAOException("Erro ao atualizar conta de numero "+conta.getNumero()+": " + QUERY_ATUALIZAR_NUMERO, e);
+        }
+    }
+
+	public void atualizarSaldo(Conta conta) throws DAOException {
+        try{
+            PreparedStatement st = con.prepareStatement(QUERY_ATUALIZAR_SALDO);
+            st.setDouble(1, conta.getSaldo());
+            st.setInt(2, conta.getNumero());
+            st.executeUpdate();
+        } catch(SQLException e){
+            throw new DAOException("Erro ao atualizar o saldo da conta de numero "+conta.getNumero()+": " + QUERY_ATUALIZAR_SALDO, e);
         }
     }
 
