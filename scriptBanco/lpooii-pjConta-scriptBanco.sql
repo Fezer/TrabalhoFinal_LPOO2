@@ -1,34 +1,43 @@
-/* LPOOII - PJ Banco - Diagrama BD - Logico Relacional: */
-CREATE TABLE Cliente (
-    cpf VARCHAR(11) PRIMARY KEY,
-    nome VARCHAR(100),
-    sobrenome VARCHAR(100),
-    rg VARCHAR(20),
-    endereco VARCHAR(250)
-);
+CREATE TABLE IF NOT EXISTS lpoo2_banco.cliente (
+  cpf VARCHAR(11) NOT NULL,
+  nome VARCHAR(255) NOT NULL,
+  sobrenome VARCHAR(255) NOT NULL,
+  rg VARCHAR(9) NOT NULL,
+  endereco VARCHAR(255) NOT NULL,
+  PRIMARY KEY (cpf),
+  UNIQUE INDEX ukCpfCiente (cpf ASC) VISIBLE)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
 
-CREATE TABLE ContaCorrente (
-    numero INTEGER PRIMARY KEY,
-    limite DOUBLE,
-    saldo DOUBLE,
-    cpfCliente VARCHAR(11)
-);
 
-CREATE TABLE ContaInvestimento (
-    numero INTEGER PRIMARY KEY,
-    depositoMinimo DOUBLE,
-    montanteMinimo DOUBLE,
-    saldo DOUBLE,
-    cpfCliente VARCHAR(11)
-);
-
- 
-ALTER TABLE ContaCorrente ADD CONSTRAINT fkContaCorrenteCpfCliente
+CREATE TABLE lpoo2_banco.ContaCorrente (
+    numero INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    limite DOUBLE UNSIGNED NULL DEFAULT NULL,
+    saldo DOUBLE NOT NULL,
+    cpfCliente VARCHAR(11) NOT NULL,
+    PRIMARY KEY (numero),
+    UNIQUE INDEX ukCpfCliente (cpfCliente ASC) VISIBLE,
+    CONSTRAINT fkClienteContaCorrente
     FOREIGN KEY (cpfCliente)
-    REFERENCES Cliente (cpf)
-    ON DELETE CASCADE;
- 
-ALTER TABLE ContaInvestimento ADD CONSTRAINT fkContaInvestimentoCpfCliente
+    REFERENCES lpoo2_banco.cliente (cpf))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+CREATE TABLE lpoo2_banco.ContaInvestimento (
+    numero INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    depositoMinimo DOUBLE UNSIGNED NULL DEFAULT NULL,
+    montanteMinimo DOUBLE UNSIGNED NULL DEFAULT NULL,
+    saldo DOUBLE NOT NULL,
+    cpfCliente VARCHAR(11) NOT NULL,
+    PRIMARY KEY (numero),
+    UNIQUE INDEX ukCpfCliente (cpfCliente ASC) VISIBLE,
+    CONSTRAINT fkContaInvestimento
     FOREIGN KEY (cpfCliente)
-    REFERENCES Cliente (cpf)
-    ON DELETE CASCADE;
+    REFERENCES lpoo2_banco.cliente (cpf))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+ 
