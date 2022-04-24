@@ -1,6 +1,6 @@
 package view;
 
-import controller.Usability;
+import controller.BancoController;
 import model.Cliente;
 import model.Conta;
 import model.ContaCorrente;
@@ -22,7 +22,7 @@ import javax.swing.table.TableRowSorter;
  *
  * @author nilo-
  */
-public class Clientes extends javax.swing.JFrame {
+public class ClientesView extends javax.swing.JFrame {
     private ClienteTableModel tableCliente = new ClienteTableModel(); 
     private ContasTableModel tableConta = new ContasTableModel();
     
@@ -36,12 +36,16 @@ public class Clientes extends javax.swing.JFrame {
     /**
      * Creates new form NewJFrame
      */
-    public Clientes() {
+    public ClientesView() {
         initComponents();
         sacarButton.setVisible(false);
         remButton.setVisible(false);
         depButton.setVisible(false);
         saldoButton.setVisible(false);      
+    }
+    
+    public void setController(BancoController aThis) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     /**
@@ -104,6 +108,7 @@ public class Clientes extends javax.swing.JFrame {
         depButton = new javax.swing.JButton();
         saldoButton = new javax.swing.JButton();
         remButton = new javax.swing.JButton();
+        tipoContaLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -170,37 +175,43 @@ public class Clientes extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addGap(7, 7, 7)
-                                .addComponent(endereçoText, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cadastrarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(atualizartButton, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel3)
                                 .addGap(24, 24, 24)
                                 .addComponent(nomeText, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
-                                .addComponent(jLabel7)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 426, Short.MAX_VALUE)
+                                .addComponent(jLabel7))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addGap(7, 7, 7)
+                                .addComponent(endereçoText, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(sobrenomeText, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(cpfText, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel2)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(rgText, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(removerButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(rgText, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(cadastrarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(atualizartButton, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(removerButton, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(72, 72, 72)
+                        .addComponent(jScrollPane2)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -216,17 +227,22 @@ public class Clientes extends javax.swing.JFrame {
                     .addComponent(cpfText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
                     .addComponent(rgText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGap(1, 1, 1)
+                                .addComponent(endereçoText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(3, 3, 3))
+                            .addComponent(jLabel4)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(endereçoText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(cadastrarButton)
                             .addComponent(atualizartButton)
-                            .addComponent(removerButton))
-                        .addGap(1, 1, 1))
-                    .addComponent(jLabel4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+                            .addComponent(removerButton))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 413, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -363,7 +379,7 @@ public class Clientes extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(7, 7, 7)
                         .addComponent(contaProps, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 413, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -430,10 +446,7 @@ public class Clientes extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 878, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(jLabel16)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -443,22 +456,29 @@ public class Clientes extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(cpfPesqText, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
+                                .addComponent(tipoContaLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel8)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(nrContaLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(16, 16, 16)
+                                .addGap(18, 18, 18)
                                 .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(valorText, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(75, 75, 75)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(sacarButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(saldoButton, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(depButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(remButton, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE))
-                        .addGap(41, 41, 41))))
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(saldoButton, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(remButton, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(sacarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(depButton, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(326, 326, 326))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jScrollPane4)
+                        .addGap(138, 138, 138))))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -466,21 +486,29 @@ public class Clientes extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(nrContaLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel14)
-                        .addComponent(cpfPesqText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel8)
-                        .addComponent(jLabel17)
-                        .addComponent(valorText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(sacarButton)
-                        .addComponent(depButton)))
-                .addGap(17, 17, 17)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel16)
-                    .addComponent(nomeDonoContaText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(saldoButton)
-                    .addComponent(remButton))
-                .addGap(18, 18, 18)
+                    .addComponent(tipoContaLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(sacarButton)
+                            .addComponent(depButton)))
+                    .addComponent(cpfPesqText)
+                    .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(valorText))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel16)
+                            .addComponent(nomeDonoContaText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(saldoButton)
+                            .addComponent(remButton))))
+                .addGap(38, 38, 38)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 413, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -527,11 +555,8 @@ public class Clientes extends javax.swing.JFrame {
             
             int response = JOptionPane.showConfirmDialog(this, "Deseja remover o cliente "+clienteSelecionado.getNome()+" ?\nTodas as contas referente a esse cliente serão apagadas.");
             if(response == JOptionPane.YES_OPTION){
+                tableConta.removeConta(clienteSelecionado);
                 tableCliente.removeCliente(clienteSelecionado);
-                
-				if(clienteSelecionado.isPossuiConta()) {
-					tableConta.removeConta(clienteSelecionado);
-				}
                 limpaFormulario();
                 linhaClicada = -1;
             }            
@@ -557,7 +582,7 @@ public class Clientes extends javax.swing.JFrame {
 
     private void VincularButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VincularButtonActionPerformed
         int contaOpc = tipoContaComboBox.getSelectedIndex();
-        int numeroConta = Usability.contas.size()+1;
+        int numeroConta = BancoController.contas.size()+1;
         Conta c;
         if(linhaClicadaVinc == -1)
             return;
@@ -613,56 +638,6 @@ public class Clientes extends javax.swing.JFrame {
        }
     }//GEN-LAST:event_tipoContaComboBoxActionPerformed
 
-    private void contasTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_contasTableMouseClicked
-        linhaClicadaContas = contasTable.rowAtPoint(evt.getPoint());
-        contaSelecionada = tableConta.getConta(linhaClicadaContas);
-        
-        sacarButton.setVisible(true);
-        remButton.setVisible(true);
-        depButton.setVisible(true);
-        saldoButton.setVisible(true);
-        
-        setFormularioConta(contaSelecionada);
-    }//GEN-LAST:event_contasTableMouseClicked
-
-    private void sacarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sacarButtonActionPerformed
-        if(linhaClicadaContas == -1)
-            return;
-        
-        double valor = Double.parseDouble(valorText.getText());
-        if(contaSelecionada.saca(valor))
-            JOptionPane.showMessageDialog(this, "Saque realizado!");
-        else
-            JOptionPane.showMessageDialog(this, "Não foi possivel realizar o saque.");
-    }//GEN-LAST:event_sacarButtonActionPerformed
-
-    private void saldoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saldoButtonActionPerformed
-        if(linhaClicadaContas == -1)
-            return;
-        
-        JOptionPane.showMessageDialog(this, "O Saldo da conta "+contaSelecionada.getNumero()+" é: "+contaSelecionada.getSaldo());
-    }//GEN-LAST:event_saldoButtonActionPerformed
-
-    private void remButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_remButtonActionPerformed
-       if(linhaClicadaContas == -1)
-            return;
-        
-        contaSelecionada.remunera();
-        JOptionPane.showMessageDialog(this, "Conta "+contaSelecionada.getNumero()+" remunerada!");
-       
-    }//GEN-LAST:event_remButtonActionPerformed
-
-    private void depButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_depButtonActionPerformed
-        if(linhaClicadaContas == -1)
-            return;
-        
-        double valor = Double.parseDouble(valorText.getText());
-        if(contaSelecionada.deposita(valor))
-            JOptionPane.showMessageDialog(this, "Depósito realizado!");
-        else
-            JOptionPane.showMessageDialog(this, "Não foi possivel realizar o depósito.");
-    }//GEN-LAST:event_depButtonActionPerformed
-
     private void jTabbedPane2StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPane2StateChanged
         limpaFormulario();
         limpaFormularioConta();
@@ -673,14 +648,6 @@ public class Clientes extends javax.swing.JFrame {
         linhaClicadaVinc = -1;
     }//GEN-LAST:event_jTabbedPane2StateChanged
 
-    private void cpfPesqTextKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cpfPesqTextKeyReleased
-        String cpf = cpfPesqText.getText();
-        maskCampo(cpfPesqText, 11);
-        List<Conta> novaLista = Usability.contas.stream().filter(c -> c.getDono().getCpf().contains(cpf)).collect(Collectors.toList());
-
-        tableConta.atualizarTabela(novaLista);
-    }//GEN-LAST:event_cpfPesqTextKeyReleased
-
     private void cpfTextKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cpfTextKeyReleased
         maskCampo(cpfText, 11);
     }//GEN-LAST:event_cpfTextKeyReleased
@@ -688,6 +655,64 @@ public class Clientes extends javax.swing.JFrame {
     private void rgTextKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_rgTextKeyReleased
         maskCampo(rgText, 10);
     }//GEN-LAST:event_rgTextKeyReleased
+
+    private void remButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_remButtonActionPerformed
+        if(linhaClicadaContas == -1)
+        return;
+
+        contaSelecionada.remunera();
+        JOptionPane.showMessageDialog(this, "Conta "+contaSelecionada.getNumero()+" remunerada!");
+
+    }//GEN-LAST:event_remButtonActionPerformed
+
+    private void saldoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saldoButtonActionPerformed
+        if(linhaClicadaContas == -1)
+        return;
+
+        JOptionPane.showMessageDialog(this, "O Saldo da conta "+contaSelecionada.getNumero()+" é: "+contaSelecionada.getSaldo());
+    }//GEN-LAST:event_saldoButtonActionPerformed
+
+    private void depButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_depButtonActionPerformed
+        if(linhaClicadaContas == -1)
+        return;
+
+        double valor = Double.parseDouble(valorText.getText());
+        if(contaSelecionada.deposita(valor))
+        JOptionPane.showMessageDialog(this, "Depósito realizado!");
+        else
+        JOptionPane.showMessageDialog(this, "Não foi possivel realizar o depósito.");
+    }//GEN-LAST:event_depButtonActionPerformed
+
+    private void sacarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sacarButtonActionPerformed
+        if(linhaClicadaContas == -1)
+        return;
+
+        double valor = Double.parseDouble(valorText.getText());
+        if(contaSelecionada.saca(valor))
+        JOptionPane.showMessageDialog(this, "Saque realizado!");
+        else
+        JOptionPane.showMessageDialog(this, "Não foi possivel realizar o saque.");
+    }//GEN-LAST:event_sacarButtonActionPerformed
+
+    private void cpfPesqTextKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cpfPesqTextKeyReleased
+        String cpf = cpfPesqText.getText();
+        maskCampo(cpfPesqText, 11);
+        List<Conta> novaLista = BancoController.contas.stream().filter(c -> c.getDono().getCpf().contains(cpf)).collect(Collectors.toList());
+
+        tableConta.atualizarTabela(novaLista);
+    }//GEN-LAST:event_cpfPesqTextKeyReleased
+
+    private void contasTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_contasTableMouseClicked
+        linhaClicadaContas = contasTable.rowAtPoint(evt.getPoint());
+        contaSelecionada = tableConta.getConta(linhaClicadaContas);
+
+        sacarButton.setVisible(true);
+        remButton.setVisible(true);
+        depButton.setVisible(true);
+        saldoButton.setVisible(true);
+
+        setFormularioConta(contaSelecionada);
+    }//GEN-LAST:event_contasTableMouseClicked
 
     private void limpaFormulario(){
         nomeText.setText(null);
@@ -737,6 +762,7 @@ public class Clientes extends javax.swing.JFrame {
     private void setFormularioConta(Conta c) {
         nomeDonoContaText.setText(c.getDono().getNome()+" "+c.getDono().getSobrenome());
         nrContaLabel.setText(Integer.toString(c.getNumero()));
+        tipoContaLabel.setText(c instanceof ContaCorrente ? "Conta Corrente" : "Conta Investimento");
         cpfPesqText.setText(c.getDono().getCpf());
     }
     
@@ -769,14 +795,18 @@ public class Clientes extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Clientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ClientesView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Clientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ClientesView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Clientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ClientesView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Clientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ClientesView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -785,7 +815,7 @@ public class Clientes extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Clientes().setVisible(true);
+                new ClientesView().setVisible(true);
             }
         });
     }
@@ -841,7 +871,10 @@ public class Clientes extends javax.swing.JFrame {
     private javax.swing.JButton saldoButton;
     private javax.swing.JTextField sobrenomeText;
     private javax.swing.JComboBox<String> tipoContaComboBox;
+    private javax.swing.JLabel tipoContaLabel;
     private javax.swing.JTextField valorText;
     // End of variables declaration//GEN-END:variables
+
+
 
 }

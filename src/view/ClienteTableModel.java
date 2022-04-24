@@ -1,6 +1,6 @@
 package view;
 
-import controller.Usability;
+import controller.BancoController;
 import model.Cliente;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +11,7 @@ import exceptions.DAOException;
 public class ClienteTableModel extends AbstractTableModel {
     private final String[] colunas=new String[]{"Nome", "Sobrenome","Endereço" ,"CPF","RG", "Possui Conta"};
 
-    private List<Cliente> lista = Usability.clientes;
+    private List<Cliente> lista = BancoController.clientes;
 	private ClienteDAO clienteDao = new ClienteDAO();
 
 	public ClienteTableModel(){
