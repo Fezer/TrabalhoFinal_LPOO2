@@ -12,53 +12,47 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import model.ContaCorrente;
+import model.Cliente;
 
 /**
  *
  * @author Felipe
  */
 public class ContaCorrenteDAO {
+
+	private static final String table = "ContaCorrente";
     
     private static final String QUERY_INSERIR = 
-            "INSERT INTO ContaCorrente ("
+            "INSERT INTO "+ table +" ("
             + "numero, "
             + "limite, "
             + "saldo, "
-            + "cpfCliente, "
+            + "cpfCliente) "
             + "VALUES(?, ?, ?, ?)";
-    private static final String QUERY_BUSCAR_TODOS =
-            "SELECT "
-            + "numero, "
-            + "limite, "
-            + "saldo, "
-            + "cpfCliente, "
-            + "FROM ContaCorrente";
-    private static final String QUERY_BUSCA_NUMERO =
-            "SELECT "
-            + "numero, "
-            + "limite, "
-            + "saldo, "
-            + "cpfCliente, "
-            + "FROM ContaCorrente"
-            + "WHERE numero=?";
+
+    private static final String QUERY_BUSCAR_TODOS = "SELECT * FROM "+ table;
+
+    private static final String QUERY_BUSCA_NUMERO = "SELECT * FROM "+ table +" WHERE numero=?";
+
     private static final String QUERY_ATUALIZAR_NUMERO = 
-            "UPDATE ContaCorrente SET "
+            "UPDATE "+ table +" SET "
             + "numero=?, "
             + "limite=?, "
             + "saldo=?, "
-            + "cpfCliente=?, "
+            + "cpfCliente=? "
             + "WHERE numero=?";
-    private static final String QUERY_REMOVER = 
-            "DELETE FROM ContaCorrente "
-            + "WHERE numero=?";
+
+    private static final String QUERY_REMOVER = "DELETE FROM "+ table + " WHERE numero=?";
     
     private Connection con = null;
+	private ConnectionFactory conFactory = new ConnectionFactory();
     
-    public ContaCorrenteDAO(Connection con) throws DAOException{
-        if(con == null){
-            throw new DAOException("Conexão nula ao criar ContaCorrenteDAO.");
-        }
-        this.con = con;
+    public ContaCorrenteDAO(){
+		try {
+			this.con = this.conFactory.getConnection();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
     }
 
     //    TO-DO: Entender como correlacionar cliente com conta. Model conta correlaciona-se com cliente através do objeto e BD a correlação é pelo cpf.
@@ -73,7 +67,11 @@ public class ContaCorrenteDAO {
                 c.setNumero(rs.getInt("numero"));
                 c.setLimite(rs.getDouble("limite"));
                 c.setSaldo(rs.getDouble("saldo"));
-                
+
+                String cpf = rs.getString("cpfCliente");
+				ClienteDAO clienteDao = new ClienteDAO();
+				Cliente cliente = clienteDao.buscar(cpf);
+				c.setDono(cliente);
             }
             return c;
         }catch(SQLException e){
@@ -92,7 +90,12 @@ public class ContaCorrenteDAO {
                 c.setNumero(rs.getInt("numero"));
                 c.setLimite(rs.getDouble("limite"));
                 c.setSaldo(rs.getDouble("saldo"));
+
                 String cpf = rs.getString("cpfCliente");
+				ClienteDAO clienteDao = new ClienteDAO();
+				Cliente cliente = clienteDao.buscar(cpf);
+				c.setDono(cliente);
+
                 lista.add(c);
             }
             return lista;
