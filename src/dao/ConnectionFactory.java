@@ -29,25 +29,33 @@ public class ConnectionFactory implements AutoCloseable {
     public Connection getConnection() throws DAOException{
         if(con == null){
             try{
-                Properties prop = new Properties();
-                prop.load(getClass().getResourceAsStream("/properties/bandoDeDados.properties"));
-                DRIVER = prop.getProperty("db.driver"); 
-                URL = prop.getProperty("db.url");
-                LOGIN = prop.getProperty("db.user");
-                SENHA = prop.getProperty("db.pwd");
+                //Properties prop = new Properties();
+                //prop.load(getClass().getResourceAsStream("/properties/bancoDeDados.properties"));
+//                DRIVER = prop.getProperty("db.driver"); ;
+//                URL = prop.getProperty("db.url");
+//                LOGIN = prop.getProperty("db.user");
+//                SENHA = prop.getProperty("db.pwd");
+
+
+
+                DRIVER = "com.mysql.cj.jdbc.Driver";
+                URL = "jdbc:mysql://localhost/lpoo2_banco";
+                LOGIN = "mysqluser";
+                SENHA = "mysqluser";
                 
-//                Class.forName(DRIVER);
+                Class.forName(DRIVER);
                 con = DriverManager.getConnection(URL, LOGIN, SENHA);
-//            } catch(ClassNotFoundException e){
-//                e.printStackTrace();
-//                throw new DAOException("Driver do banco não encontrato: " + DRIVER, e);
+            } catch(ClassNotFoundException e){
+                e.printStackTrace();
+                throw new DAOException("Driver do banco não encontrato: " + DRIVER, e);
             } catch(SQLException e){
                 e.printStackTrace();
                 throw new DAOException("Erro conectando ao DB: " + URL + "/" + LOGIN + "/" + SENHA, e);
-            } catch (IOException e){
-                e.printStackTrace();
-                throw new DAOException("Erro ao carregar classe de propriedades do BD: "+ e);
             }
+//            } catch (IOException e){;
+//                e.printStackTrace();
+//                throw new DAOException("Erro ao carregar classe de propriedades do BD: "+ e);
+//            }
         }
         return con;
     }
