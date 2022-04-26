@@ -2,10 +2,7 @@ package model;
 
 import dao.ContaInvestimentoDAO;
 
-/**
- *
- * @authors nickolas & albano
- */
+
 public class ContaInvestimento extends Conta {
 
     private double depositoMin;

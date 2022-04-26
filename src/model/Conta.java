@@ -3,10 +3,7 @@ package model;
 import interfaces.ContaI;
 import dao.*;
 
-/**
- *
- * @authors nickolas & albano
- */
+
 public abstract class Conta implements ContaI{
     private int numero;
     private double saldo;

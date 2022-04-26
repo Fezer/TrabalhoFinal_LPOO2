@@ -2,10 +2,7 @@ package model;
 
 import dao.ContaCorrenteDAO;
 
-/**
- *
- * @authors nickolas & albano
- */
+
 public class ContaCorrente extends Conta {
 
     private double limite;

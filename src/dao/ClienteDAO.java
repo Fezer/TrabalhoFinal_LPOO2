@@ -15,10 +15,8 @@ import java.util.List;
 import model.ContaInvestimento;
 import model.ContaCorrente;
 
-/**
- *
- * @author Felipe
- */
+
+
 public class ClienteDAO implements DAO<Cliente> {
 
     private static ContaCorrenteDAO correnteDao = new ContaCorrenteDAO();

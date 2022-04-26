@@ -1,8 +1,6 @@
 package model;
-/**
- *
- * @authors nickolas & albano
- */
+
+
 public class Cliente implements Comparable{
     private String nome;
     private String sobrenome;

@@ -15,10 +15,7 @@ import model.ContaCorrente;
 import model.Cliente;
 import model.Conta;
 
-/**
- *
- * @author Felipe
- */
+
 public class ContaCorrenteDAO {
 
     private static final String table = "ContaCorrente";

@@ -13,10 +13,7 @@ import java.sql.SQLException;
 import java.util.Properties;
 import exceptions.DAOException;
 
-/**
- *
- * @author Felipe
- */
+
 public class ConnectionFactory implements AutoCloseable {
 
     private static String DRIVER = "";

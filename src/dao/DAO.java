@@ -7,10 +7,7 @@ package dao;
 import exceptions.DAOException;
 import java.util.List;
 
-/**
- *
- * @author Felipe
- */
+
 public interface DAO<T> {
     T buscar(String cpf) throws DAOException;
     List<T> buscarTodos() throws DAOException;

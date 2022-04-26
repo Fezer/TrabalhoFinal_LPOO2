@@ -6,10 +6,7 @@ package exceptions;
 
 import java.sql.SQLException;
 
-/**
- *
- * @author Felipe
- */
+
 public class DAOException extends Exception {
 
     public DAOException(){

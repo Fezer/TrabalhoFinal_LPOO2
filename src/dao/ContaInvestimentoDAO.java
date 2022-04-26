@@ -15,10 +15,7 @@ import model.Cliente;
 import model.Conta;
 import model.ContaInvestimento;
 
-/**
- *
- * @author Felipe
- */
+
 public class ContaInvestimentoDAO {
 
     private static ClienteDAO clienteDao = new ClienteDAO();

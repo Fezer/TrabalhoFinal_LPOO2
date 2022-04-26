@@ -18,10 +18,7 @@ import javax.swing.table.TableRowSorter;
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 
-/**
- *
- * @author nilo-
- */
+
 public class ClientesView extends javax.swing.JFrame {
     private ClienteTableModel tableCliente = new ClienteTableModel(); 
     private ContasTableModel tableConta = new ContasTableModel();
