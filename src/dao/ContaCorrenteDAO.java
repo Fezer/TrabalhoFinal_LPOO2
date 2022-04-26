@@ -22,11 +22,10 @@ public class ContaCorrenteDAO {
 
     private static final String QUERY_INSERIR
             = "INSERT INTO " + table + " ("
-            + "numero, "
             + "limite, "
             + "saldo, "
             + "cpfCliente) "
-            + "VALUES(?, ?, ?, ?)";
+            + "VALUES(?, ?, ?)";
 
     private static final String QUERY_BUSCAR_TODOS = "SELECT * FROM " + table;
 
@@ -36,7 +35,6 @@ public class ContaCorrenteDAO {
 
     private static final String QUERY_ATUALIZAR_NUMERO
             = "UPDATE " + table + " SET "
-            + "numero=?, "
             + "limite=?, "
             + "saldo=?, "
             + "cpfCliente=? "
@@ -134,14 +132,16 @@ public class ContaCorrenteDAO {
         }
     }
 
-    public void inserir(ContaCorrente conta) throws DAOException {
+    public ContaCorrente inserir(ContaCorrente conta) throws DAOException {
         try {
             PreparedStatement st = con.prepareStatement(QUERY_INSERIR);
-            st.setInt(1, conta.getNumero());
-            st.setDouble(2, conta.getLimite());
-            st.setDouble(3, conta.getSaldo());
-            st.setString(4, conta.getDono().getCpf());
+            st.setDouble(1, conta.getLimite());
+            st.setDouble(2, conta.getSaldo());
+            st.setString(3, conta.getDono().getCpf());
             st.execute();
+			
+			ContaCorrente c = this.buscarPorCpf(conta.getDono().getCpf());
+			return c;
         } catch (SQLException e) {
             throw new DAOException("Erro ao inserir conta de numero " + conta.getNumero() + ": " + QUERY_INSERIR, e);
         }
@@ -150,11 +150,10 @@ public class ContaCorrenteDAO {
     public void atualizar(ContaCorrente conta) throws DAOException {
         try {
             PreparedStatement st = con.prepareStatement(QUERY_ATUALIZAR_NUMERO);
-            st.setInt(1, conta.getNumero());
-            st.setDouble(2, conta.getLimite());
-            st.setDouble(3, conta.getSaldo());
-            st.setString(4, conta.getDono().getCpf());
-            st.setInt(5, conta.getNumero());
+            st.setDouble(1, conta.getLimite());
+            st.setDouble(2, conta.getSaldo());
+            st.setString(3, conta.getDono().getCpf());
+            st.setInt(4, conta.getNumero());
             st.executeUpdate();
         } catch (SQLException e) {
             throw new DAOException("Erro ao atualizar conta de numero " + conta.getNumero() + ": " + QUERY_ATUALIZAR_NUMERO, e);

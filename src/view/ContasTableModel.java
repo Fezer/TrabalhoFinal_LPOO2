@@ -97,18 +97,19 @@ public class ContasTableModel extends AbstractTableModel {
 
     public void adicionaContaCorrente(Conta customer) {
         try {
-            this.correnteDao.inserir((ContaCorrente) customer);
-            this.lista.add(customer);
+            ContaCorrente conta = this.correnteDao.inserir((ContaCorrente) customer);
+            this.lista.add(conta);
             this.fireTableRowsInserted(lista.size() - 1, lista.size() - 1);//update JTable
             System.out.println(this.lista.size());
         } catch (Exception e) {
+			System.out.println(e.getMessage());
         }
     }
 
     public void adicionaContaInvestimento(Conta customer) {
         try {
-            this.investimentoDao.inserir((ContaInvestimento) customer);
-            this.lista.add(customer);
+            ContaInvestimento conta = this.investimentoDao.inserir((ContaInvestimento) customer);
+            this.lista.add(conta);
             this.fireTableRowsInserted(lista.size() - 1, lista.size() - 1);//update JTable
             System.out.println(this.lista.size());
         } catch (Exception e) {
@@ -119,13 +120,15 @@ public class ContasTableModel extends AbstractTableModel {
         boolean isCorrente = false;
         Conta contaEncontrada = null;
         boolean result = false;
-
+			
         for (Conta conta : this.lista) {
-            if (conta.getDono() == customer) {
+			System.out.println(customer.getCpf());
+            if (conta.getDono().getCpf().equalsIgnoreCase(customer.getCpf())) {
                 contaEncontrada = conta;
                 break;
             }
         }
+		System.out.println("Entrou até aqui: "+contaEncontrada);
         if (contaEncontrada != null) {
             try {
                 isCorrente = clienteDao.buscarCorrente(customer.getCpf());
@@ -143,6 +146,7 @@ public class ContasTableModel extends AbstractTableModel {
                     }
                 }
             } catch (DAOException ex) {
+				System.out.println("Erro ao excluir a conta");
                 Logger.getLogger(ContasTableModel.class.getName()).log(Level.SEVERE, null, ex);
             }
             int linha = this.lista.indexOf(contaEncontrada);

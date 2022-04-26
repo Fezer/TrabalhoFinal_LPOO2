@@ -565,6 +565,7 @@ public class ClientesView extends javax.swing.JFrame {
         linhaClicada = clienteTable.convertRowIndexToModel(linhaClicada);
         clienteSelecionado = tableCliente.getCliente(linhaClicada);
         
+//		cpfText.setEnabled(false);
         setFormulario(clienteSelecionado);
     }//GEN-LAST:event_clienteTableMouseClicked
 
@@ -586,7 +587,7 @@ public class ClientesView extends javax.swing.JFrame {
         try{
             switch (contaOpc){
                 case 1:
-                    c = new ContaCorrente(Double.parseDouble(depMinLimText.getText()), numeroConta, clienteSelecionado);
+                    c = new ContaCorrente(Double.parseDouble(depMinLimText.getText()), clienteSelecionado);
                     if(!c.deposita(Double.parseDouble(depInicText.getText()))){
                          JOptionPane.showMessageDialog(this, "Não foi possivel vincular cliente a conta");
                          return;
@@ -595,7 +596,7 @@ public class ClientesView extends javax.swing.JFrame {
                     tableConta.adicionaContaCorrente(c);
                     break;
                 case 2:
-                    c = new ContaInvestimento(Double.parseDouble(depMinLimText.getText()),Double.parseDouble(montMinText.getText()), numeroConta, clienteSelecionado);
+                    c = new ContaInvestimento(Double.parseDouble(depMinLimText.getText()),Double.parseDouble(montMinText.getText()), clienteSelecionado);
                     if(!c.deposita(Double.parseDouble(depInicText.getText()))){
                          JOptionPane.showMessageDialog(this, "Não foi possivel vincular cliente a conta\nObserve o depósito minimo");
                          return;
@@ -717,6 +718,7 @@ public class ClientesView extends javax.swing.JFrame {
         rgText.setText(null);
         cpfText.setText(null);
         endereçoText.setText(null);
+		cpfText.setEnabled(true);
     }
     
     private void setFormulario(Cliente c){
@@ -725,6 +727,7 @@ public class ClientesView extends javax.swing.JFrame {
         rgText.setText(c.getRg());
         cpfText.setText(c.getCpf());
         endereçoText.setText(c.getEndereco());
+		cpfText.setEnabled(false);
     }
     
     private void maskCampo(JTextField field, int max){

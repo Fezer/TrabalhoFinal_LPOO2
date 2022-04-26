@@ -140,7 +140,7 @@ public class ContaInvestimentoDAO {
         }
     }
 
-    public void inserir(ContaInvestimento conta) throws DAOException {
+    public ContaInvestimento inserir(ContaInvestimento conta) throws DAOException {
         try {
             PreparedStatement st = con.prepareStatement(QUERY_INSERIR);
             st.setInt(1, conta.getNumero());
@@ -149,6 +149,9 @@ public class ContaInvestimentoDAO {
             st.setDouble(4, conta.getSaldo());
             st.setString(5, conta.getDono().getCpf());
             st.execute();
+
+			ContaInvestimento c = this.buscarPorCpf(conta.getDono().getCpf());
+			return c;
         } catch (SQLException e) {
             throw new DAOException("Erro ao inserir conta de numero " + conta.getNumero() + ": " + QUERY_INSERIR, e);
         }

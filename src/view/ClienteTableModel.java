@@ -66,6 +66,7 @@ public class ClienteTableModel extends AbstractTableModel {
 			this.fireTableRowsInserted(lista.size()-1,lista.size()-1);//update JTable
 			System.out.println(this.lista.size());
 		} catch (Exception e) {
+			System.out.println(e.getMessage());
 		}
     }
     
@@ -87,6 +88,7 @@ public class ClienteTableModel extends AbstractTableModel {
 			this.lista.set(linha, c);
 			this.fireTableDataChanged();
 		} catch (Exception e) {
+			System.out.println(e.getMessage());
 		}
     }
 

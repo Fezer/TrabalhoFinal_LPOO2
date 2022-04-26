@@ -12,9 +12,8 @@ public abstract class Conta implements ContaI{
     public Conta() {
     }
 
-    public Conta(int numero, Cliente dono) {
+    public Conta( Cliente dono) {
         this.dono = dono;
-        this.numero = numero;
         this.saldo = 0;
     }
    

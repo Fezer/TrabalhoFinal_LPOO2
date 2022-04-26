@@ -43,7 +43,7 @@ public class ClienteDAO implements DAO<Cliente> {
 
     private static final String QUERY_ATUALIZAR_CPF
             = "UPDATE " + table + " SET "
-            + "cpf=?, "
+			+ "cpf=?,"
             + "nome=?, "
             + "sobrenome=?, "
             + "rg=?, "
@@ -174,7 +174,7 @@ public class ClienteDAO implements DAO<Cliente> {
     public void atualizar(Cliente c) throws DAOException {
         try {
             PreparedStatement st = con.prepareStatement(QUERY_ATUALIZAR_CPF);
-            st.setString(1, c.getCpf());
+			st.setString(1, c.getCpf());
             st.setString(2, c.getNome());
             st.setString(3, c.getSobrenome());
             st.setString(4, c.getRg());
